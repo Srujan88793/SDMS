@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Option Field</title>
+    <style>
+        /* Reset Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: rgb(232, 218, 226);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.5s ease;
+        }
+
+        /* Navbar Styling */
+        .topnav {
+            background-color: #1a43bf;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 15px 20px;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between; /* Align logo left and username right */
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: 500;
+            color: #f0f0f0;
+        }
+
+        /* Container Styling */
+        .container {
+            background: white;
+            max-width: 1100px;
+            width: 90%;
+            margin: 120px auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            color: #1a43bf;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* Navigation Links */
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            background: #1a43bf;
+            padding: 15px 35px;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 18px;
+            font-weight: 500;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a:hover {
+            background: #4b60e6;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Logout Button */
+        .logout {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: #ff9800;
+            padding: 15px 35px;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logout:hover {
+            background: #e67e00;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Animation for the h2 */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Layout */
+        @media screen and (max-width: 992px) {
+            .container {
+                padding: 30px;
+                margin: 100px 20px;
+            }
+
+            nav a, .logout {
+                width: 100%;
+                text-align: center;
+                font-size: 16px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px 20px;
+            }
+
+            .container {
+                padding: 25px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a, .logout {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="topnav">
+    <span class="logo">KSSEM</span>
+    <span class="username">Welcome {{ username }}</span>
+</div>
+
+<br><br>
+
+<!-- Content -->
+<div class="container">
+    <h2>Welcome {{ username }}</h2>
+
+    <nav>
+        {% if role == 'admin' %}
+            <a href="{{ url_for('admin_panel') }}"><i class="fa fa-cogs"></i> Admin Panel</a>
+        {% elif role == 'teacher' %}
+            <a href="{{ url_for('teacher_dashboard') }}"><i class="fa fa-users"></i> View Student Details</a>
+        {% elif role == 'student' %}
+            <a href="{{ url_for('student_dashboard') }}"><i class="fa fa-user"></i> Enter Your Details</a>
+        {% endif %}
+    </nav>
+
+    <a href="{{ url_for('logout') }}" class="logout"><i class="fa fa-sign-out"></i> Logout</a>
+</div>
+
+</body>
+</html>

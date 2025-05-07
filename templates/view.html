@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <style>
+        /* =================================
+            Base Styles
+            ================================= */
+        /* =================================
+    Base Styles
+    ================================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:  rgb(232, 218, 226);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    line-height: 1.6;
+    transition: all 0.3s ease-in-out;
+}
+
+/* =================================
+    Navigation
+    ================================= */
+.topnav {
+    background: linear-gradient(to right, #1a43bf, #153bb3);
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 12px 30px;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.topnav .logo {
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* =================================
+    Container
+    ================================= */
+.container {
+    width: 90%;
+    max-width: 900px;
+    background-color: #efd8b8;
+    border-radius: 16px;
+    margin: 100px auto 50px;
+    padding: 40px;
+    border: 1px solid black;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* =================================
+    Headings
+    ================================= */
+h2 {
+    text-align: center;
+    font-size: 2.6rem;
+    margin-bottom: 35px;
+    color: #1e1e1e;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+h3 {
+    font-size: 2rem;
+    margin: 40px 0 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #8b0000;
+    color: #222;
+    font-weight: 600;
+}
+
+/* =================================
+    Photo Container
+    ================================= */
+.photo-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.photo-container img {
+    max-width: 160px;
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.photo-container img:hover {
+    transform: scale(1.05);
+}
+
+.photo-container > div {
+    font-style: italic;
+    color:black;
+}
+
+/* =================================
+    Detail Row
+    ================================= */
+.detail-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px solid black;
+    align-items: center;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #666;
+}
+
+.detail-value {
+    color: #444;
+}
+
+.detail-value a {
+    color: #1a43bf;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.detail-value a:hover,
+.detail-value a:focus {
+    color: #002b80;
+    text-decoration: underline;
+}
+
+/* =================================
+    Button
+    ================================= */
+.button-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.button-container button {
+    background: #1a43bf;
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button-container button:hover,
+.button-container button:focus {
+    background-color: #0e2c8a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* =================================
+    Responsive
+    ================================= */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+        margin-top: 80px;
+    }
+
+    .detail-row {
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.6rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="topnav">
+        <div class="logo">KSSEM ECE</div>
+    </div>
+    <div class="container">
+        <h3 style="text-align: center;">Student Details</h3>
+        <div class="photo-container">
+            {% if student.photo %}
+            <img src="{{ url_for('static', filename='uploads/' + student.photo) }}" alt="Student Photo">
+            {% else %}
+            <div>No Photo Available</div>
+            {% endif %}
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Name:</div>
+            <div class="detail-value">{{ student.name }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">USN:</div>
+            <div class="detail-value">{{ student.usn }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Date of Birth:</div>
+            <div class="detail-value">{{ student.dob }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Gender:</div>
+            <div class="detail-value">{{ student.gender }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">CET Rank:</div>
+            <div class="detail-value">{{ student.cetrank }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">COMEDK Rank:</div>
+            <div class="detail-value">{{ student.comedk }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Aadhaar Number:</div>
+            <div class="detail-value">{{ student.aadhaarnumber }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Day Scholar/Hosteller:</div>
+            <div class="detail-value">{{ student.dayscholar }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Branch:</div>
+            <div class="detail-value">{{ student.branch }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Present Address:</div>
+            <div class="detail-value">{{ student.presentaddress }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Permanent Address:</div>
+            <div class="detail-value">{{ student.permanentaddress }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Mobile Number:</div>
+            <div class="detail-value">{{ student.mobilenumber }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Email:</div>
+            <div class="detail-value">{{ student.email }}</div>
+        </div>
+
+        <h3 style="text-align: center;">Placement Details</h3>
+        <div class="detail-row">
+            <div class="detail-label">Placed In:</div>
+            <div class="detail-value">{{ student.placed_company or 'Not Placed yet' }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Package (LPA):</div>
+            <div class="detail-value">{{ student.package or 'Not Applicable' }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Joining Date:</div>
+            <div class="detail-value">{{ student.joining_date or 'Not Applicable' }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Offer Letter:</div>
+            <div class="detail-value">
+                {% if student.offer_letter %}
+                <a href="{{ url_for('static', filename='uploads/' + student.offer_letter) }}" target="_blank">View File</a>
+                {% else %}
+                No Offer Letter Available
+                {% endif %}
+            </div>
+        </div>
+
+        {% if parent %}
+        <h3 style="text-align: center;">Parent Details</h3>
+        <div class="detail-row">
+            <div class="detail-label">Father's Photo:</div>
+            <div class="detail-value">
+                {% if parent.father_photo %}
+                <img src="{{ url_for('static', filename='uploads/' + parent.father_photo) }}" alt="Father's Photo" width="100">
+                {% else %}
+                <div>No Photo Available</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Father's Name:</div>
+            <div class="detail-value">{{ parent.father_name }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Father's Occupation:</div>
+            <div class="detail-value">{{ parent.father_occupation }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Father's Mobile:</div>
+            <div class="detail-value">{{ parent.father_mobile }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Father's Email:</div>
+            <div class="detail-value">{{ parent.father_email or 'N/A' }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Mother's Photo:</div>
+            <div class="detail-value">
+                {% if parent.mother_photo %}
+                <img src="{{ url_for('static', filename='uploads/' + parent.mother_photo) }}" alt="Mother's Photo" width="100">
+                {% else %}
+                <div>No Photo Available</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Mother's Name:</div>
+            <div class="detail-value">{{ parent.mother_name }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Mother's Occupation:</div>
+            <div class="detail-value">{{ parent.mother_occupation }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Mother's Mobile:</div>
+            <div class="detail-value">{{ parent.mother_mobile }}</div>
+        </div>
+        {% if parent.guardian_name %}
+        <div class="detail-row">
+            <div class="detail-label">Guardian's Photo:</div>
+            <div class="detail-value">
+                {% if parent.guardian_photo %}
+                <img src="{{ url_for('static', filename='uploads/' + parent.guardian_photo) }}" alt="Guardian's Photo" width="100">
+                {% else %}
+                <div>No Photo Available</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Guardian Name:</div>
+            <div class="detail-value">{{ parent.guardian_name }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Guardian Occupation:</div>
+            <div class="detail-value">{{ parent.guardian_occupation }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Guardian Mobile:</div>
+            <div class="detail-value">{{ parent.guardian_mobile }}</div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if academic_details %}
+        <h3 style="text-align: center;">Academic Details</h3>
+        <div class="detail-row">
+            <div class="detail-label">School:</div>
+            <div class="detail-value">{{ academic_details.school }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Passing Year:</div>
+            <div class="detail-value">{{ academic_details.year }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Grade:</div>
+            <div class="detail-value">{{ academic_details.classs }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Tenth Markscard:</div>
+            <div class="detail-value">
+                {% if academic_details.tenth_file %}
+                <a href="{{ url_for('static', filename='uploads/' + academic_details.tenth_file) }}" target="_blank">View File</a>
+                {% else %}
+                N/A
+                {% endif %}
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">College:</div>
+            <div class="detail-value">{{ academic_details.college }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Passing Year:</div>
+            <div class="detail-value">{{ academic_details.passyear }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Grade:</div>
+            <div class="detail-value">{{ academic_details.grade }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">12th/Diploma:</div>
+            <div class="detail-value">
+                {% if academic_details.puc_file %}
+                <a href="{{ url_for('static', filename='uploads/' + academic_details.puc_file) }}" target="_blank">View File</a>
+                {% else %}
+                N/A
+                {% endif %}
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Hobby:</div>
+            <div class="detail-value">{{ academic_details.hobby }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Achievements:</div>
+            <div class="detail-value">{{ academic_details.achieve }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Certificates Obtained:</div>
+            <div class="detail-value">
+                {% if academic_details.awards_file %}
+                <a href="{{ url_for('static', filename='uploads/' + academic_details.awards_file) }}" target="_blank">View File</a>
+                {% else %}
+                N/A
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="button-container">
+            <button onclick="window.history.back()">Go Back</button>
+        </div>
+    </div>
+</body>
+</html>
